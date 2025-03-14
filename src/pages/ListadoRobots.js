@@ -2,10 +2,32 @@ import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Banner from "../components/Banner";
 import Footer from "../components/Footer";
+import messagesEn from "../locales/en.json";
+import messagesEs from "../locales/es.json";
+import { IntlProvider, FormattedMessage } from "react-intl";
+
 const ListadoRobots = () => {
   const [robots, setRobots] = useState([]);
   const [selectedRobot, setSelectedRobot] = useState(null);
   const [error, setError] = useState("");
+  const messages = {
+  en: messagesEn,
+  es: messagesEs,
+};
+  const locale = 'es';
+  // const locale = 'en';
+  function getImageFromID(id) {
+    const dictionary = {
+        1: "https://github.com/fai-aher/T34-Wiki-Backup/blob/main/images/robot1.png?raw=true",
+        2: "https://github.com/fai-aher/T34-Wiki-Backup/blob/main/images/robot2.png?raw=true",
+        3: "https://github.com/fai-aher/T34-Wiki-Backup/blob/main/images/robot3.png?raw=true",
+        4: "https://github.com/fai-aher/T34-Wiki-Backup/blob/main/images/robot4.png?raw=true",
+        5: "https://github.com/fai-aher/T34-Wiki-Backup/blob/main/images/robot5.png?raw=true",
+        6: "https://github.com/fai-aher/T34-Wiki-Backup/blob/main/images/robot6.png?raw=true",
+    };
+
+    return dictionary[id] || "ID no encontrado";
+}
 
   // Fetch all robots
   useEffect(() => {
@@ -42,7 +64,9 @@ const ListadoRobots = () => {
   };
 
   return (
+          <IntlProvider locale={locale} messages={messages[locale]}>
     <div className="container my-4">
+
         <Banner/>
       {error && <p className="text-danger">{error}</p>}
 
@@ -52,9 +76,9 @@ const ListadoRobots = () => {
             <thead class="table-dark">
               <tr>
                 <th>ID</th>
-                <th>Nombre</th>
-                <th>Modelo</th>
-                <th>Empresa Fabricante</th>
+                <th> <FormattedMessage id="name" /></th>
+                <th><FormattedMessage id="model" /></th>
+                <th><FormattedMessage id="manufacturer" /></th>
               </tr>
             </thead>
             <tbody>
@@ -87,19 +111,19 @@ const ListadoRobots = () => {
               {/* Obligao a ponerle color especifico :( */}
               <h5 className="fw-bold">{selectedRobot.nombre}</h5>
               <img
-                src={selectedRobot.imagen}
+                src={getImageFromID(selectedRobot.id)}
                 alt={selectedRobot.nombre}
                 className="img-fluid mb-3"
                 style={{ borderRadius: "10px", maxWidth: "100%", height: "auto" }}
                 />
               <p className="text-start">
-                <span style={{ fontWeight: "bold" }}>→ Año de Fabricación:</span> {selectedRobot.añoFabricacion}
+                <span style={{ fontWeight: "bold" }}>→ <FormattedMessage id="year_of_manufacture" />:</span> {selectedRobot.añoFabricacion}
               </p>
               <p className="text-start">
-                <span style={{ fontWeight: "bold" }}>→ Capacidad de Procesamiento:</span> {selectedRobot.capacidadProcesamiento}
+                <span style={{ fontWeight: "bold" }}>→ <FormattedMessage id="processing_capacity" />:</span> {selectedRobot.capacidadProcesamiento}
               </p>
               <p className="text-start">
-                <span style={{ fontWeight: "bold" }}>→ Humor:</span> {selectedRobot.humor}
+                <span style={{ fontWeight: "bold" }}>→ <FormattedMessage id="mood" />:</span> {selectedRobot.humor}
               </p>
                 {/* Flechitas para que se parezca al 100% */}
             </div>
@@ -111,6 +135,8 @@ const ListadoRobots = () => {
       </div>
         <Footer/>
     </div>
+        </IntlProvider>
+
   );
 };
 

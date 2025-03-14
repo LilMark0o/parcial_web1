@@ -1,0 +1,9 @@
+{
+    "id": "ID",
+    "name": "Nombre",
+    "model": "Modelo",
+    "manufacturer": "Empresa Fabricante",
+    "year_of_manufacture": "Año de Fabricación",
+    "processing_capacity": "Capacidad de Procesamiento",
+    "mood": "Humor"
+  }

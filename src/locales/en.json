@@ -1,0 +1,9 @@
+{
+    "id": "ID",
+    "name": "Name",
+    "model": "Model",
+    "manufacturer": "Manufacturer",
+    "year_of_manufacture": "Year of Manufacture",
+    "processing_capacity": "Processing Capacity",
+    "mood": "Mood"
+  }
